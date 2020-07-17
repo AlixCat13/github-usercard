@@ -70,7 +70,7 @@ return successResponse
   console.log(errorResponse)
 })
 
-const gitCard = (userProfile) => {
+const cardMaker = (userProfile) => {
   const card = document.createElement('div')
   const userImg = document.createElement('img')
   const cardInfo = document.createElement('p')
@@ -88,15 +88,15 @@ const gitCard = (userProfile) => {
   name.classList.add('name')
   userName.classList.add('username')
 
-  userImg.src = object.data.avatar_url
-  name.textContent = object.data.name
-  userName.textContent = object.data.login
-  location.textContent = `Location: ${object.data.location}`
+  userImg.src = Object.data.avatar_url
+  name.textContent = Object.data.name
+  userName.textContent = Object.data.login
+  location.textContent = `Location: ${Object.data.location}`
   profile.textContent = `Profile: ${link}`
-  link.href = object.data.avatar_url
-  followers.textContent = `Followers: ${object.data.followers}`
-  following.textContent = `Following: ${object.data.following}`
-  bio.textContent = `Bio: ${object.data.bio}`
+  link.href = Object.data.avatar_url
+  followers.textContent = `Followers: ${Object.data.followers}`
+  following.textContent = `Following: ${Object.data.following}`
+  bio.textContent = `Bio: ${Object.data.bio}`
   card.appendChild(userImg)
   card.appendChild(cardInfo)
   cardInfo.appendChild(name)
@@ -111,7 +111,7 @@ const gitCard = (userProfile) => {
 }
 
 const cardGroup = document.querySelector('.cards')
-cardGroup.appendChild(gitCard(successResponse));
+cardGroup.appendChild(cardMaker(Object));
 
 followersArray.forEach(data => {
   cardGroup.appendChild(gitCard(data.name, data.userName, data.location, data.profile, data.followers, data.following, data.bio))
