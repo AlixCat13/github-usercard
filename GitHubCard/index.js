@@ -72,7 +72,7 @@ axios.get("https://api.github.com/users/AlixCat13")
 
 const gitCard = (userProfile) => {
   const card = document.createElement('div')
-  const userPic = document.createElement('img')
+  const userImg = document.createElement('img')
   const cardInfo = document.createElement('p')
   const name = document.createElement('h3')
   const userName = document.createElement('p')
@@ -88,5 +88,28 @@ const gitCard = (userProfile) => {
   name.classList.add('name')
   userName.classList.add('username')
 
-  
+  userImg.src = object.data.avatar_url
+  name.textContent = object.data.name
+  userName.textContent = object.data.login
+  location.textContent = `Location: ${object.data.location}`
+  profile.textContent = `Profile: ${link}`
+  link.href = object.data.avatar_url
+  followers.textContent = `Followers: ${object.data.followers}`
+  following.textContent = `Following: ${object.data.following}`
+  bio.textContent = `Bio: ${object.data.bio}`
+  card.appendChild(userImg)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(userName)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  profile.appendChild(link)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  return card  
 }
+
+const cardGroup = document.querySelector('.cards')
+cardGroup.appendChild(gitCard(successResponse));
