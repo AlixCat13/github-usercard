@@ -130,10 +130,10 @@ const cardMaker = (data) => {
 
 const cardGroup = document.querySelector('.cards')
 
-// const newCard = friendsArray;
+const newCard = friendsArray;
 
 
 
-// friendsArray.forEach(() => {
-//   newCard.appendChild(cardGroup)
-// })
+friendsArray.forEach(() => {
+  newCard.appendChild(cardGroup)
+})
