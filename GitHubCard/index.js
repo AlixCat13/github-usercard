@@ -4,17 +4,7 @@
     https://api.github.com/users/<your name>
 */
 
-import axios from 'axios'
 
-axios.get("https://api.github.com/users/AlixCat13")
-.then((successResponse) => {
-  console.log(successResponse)
-return successResponse
-})
-
-.catch((errorResponse) => {
-  console.log(errorResponse)
-})
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -73,10 +63,25 @@ const followersArray = [
     bigknell
 */
 
+import axios from 'axios'
+
+axios.get("https://api.github.com/users/AlixCat13")
+.then((successResponse) => {
+  console.log(successResponse)
+  Object.entries(successResponse).forEach( (url) => {
+  const newCard = cardMaker(url)
+  cardGroup.appendChild(newCard)
+  })
+})
+
+.catch((errorResponse) => {
+  console.log('Error!', errorResponse)
+})
 
 
 
-const cardMaker = (userProfile) => {
+const cardMaker = (Object) => {
+  console.log(Object.data.avatar_url)
   const card = document.createElement('div')
   const userImg = document.createElement('img')
   const cardInfo = document.createElement('p')
@@ -84,7 +89,7 @@ const cardMaker = (userProfile) => {
   const userName = document.createElement('p')
   const location = document.createElement('p')
   const profile = document.createElement('p')
-  const link = document.createElement('a')
+  const address = document.createElement('a')
   const followers = document.createElement('p')
   const following = document.createElement('p')
   const bio = document.createElement('p')
@@ -98,28 +103,32 @@ const cardMaker = (userProfile) => {
   
   name.textContent = Object.data.name
   userName.textContent = Object.data.login
-  location.textContent = `Location: ${Object.data.location}`
-  profile.textContent = `Profile: ${link}`
-  link.setAttribute('href', Object.data['html_url'])
-  followers.textContent = `Followers: ${Object.data.followers}`
-  following.textContent = `Following: ${Object.data.following}`
-  bio.textContent = `Bio: ${Object.data.bio}`
-  card.appendChild(userImg)
+  location.textContent = 'Location:' + Object.data.location
+  profile.textContent = 'Profile: '
+  address.setAttribute('href', Object.data)
+  address.textContent = Object.data.html_url
+  followers.textContent = 'Followers:' + Object.data.followers
+  following.textContent = 'Following:' + Object.data.following
+  bio.textContent = 'Bio:' + Object.data.bio
+
+
+  profile.appendChild(address)
   card.appendChild(cardInfo)
-  cardInfo.appendChild(name)
-  cardInfo.appendChild(userName)
-  cardInfo.appendChild(location)
-  cardInfo.appendChild(profile)
-  cardInfo.appendChild(followers)
-  cardInfo.appendChild(following)
-  cardInfo.appendChild(bio)
+  card.appendChild(name)
+  card.appendChild(userName)
+  card.appendChild(location)
+  card.appendChild(profile)
+  card.appendChild(followers)
+  card.appendChild(following)
+  card.appendChild(bio)
 
   return card  
 }
 
 const cardGroup = document.querySelector('.cards')
-cardGroup.appendChild(cardMaker(card));
 
-followersArray.forEach(data => {
-  cardGroup.appendChild(gitCard(Object.data.name, Object.data.userName, Object.data.location, Object.data.profile, Object.data.followers, Object.data.following, Object.data.bio))
+
+
+followersArray.forEach(Object => {
+  cardGroup.appendChild(cardMaker(Object.data.name, Object.data.userName, Object.data.location, Object.data.profile, Object.data.followers, Object.data.following, Object.data.bio))
 })
