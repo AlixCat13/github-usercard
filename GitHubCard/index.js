@@ -99,7 +99,7 @@ const cardMaker = (data) => {
 
   card.classList.add('card')
   cardInfo.classList.add('card-info')
-  userImg.src = Object['avatar_url']
+  userImg.src = data.avatar_url
   name.classList.add('name')
   userName.classList.add('username')
 
@@ -107,8 +107,8 @@ const cardMaker = (data) => {
   name.textContent = data.name
   userName.textContent = data.login
   location.textContent = ('Location:', data.location)
-  profile.textContent = 'Profile:', address
-  address.setAttribute('href', data)
+  profile.textContent = 'Profile:', data.html_url
+  address.setAttribute('href', data.html_url)
   address.textContent = data.html_url
   followers.textContent = ('Followers:' , data.followers)
   following.textContent = ('Following:' , data.following)
@@ -131,8 +131,6 @@ const cardMaker = (data) => {
 const cardGroup = document.querySelector('.cards')
 
 const newCard = friendsArray;
-
-
 
 friendsArray.forEach(() => {
   newCard.appendChild(cardGroup)
