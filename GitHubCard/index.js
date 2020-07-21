@@ -30,9 +30,12 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [
+const friendsArray = [
 'https://api.github.com/users/tetondan', 
-'https://api.github.com/users/dustinmyers', 'https://api.github.com/users/justmsl', 'https://api.github.com/users/luishrd', 'https://api.github.com/users/bigknell'];
+'https://api.github.com/users/dustinmyers', 
+'https://api.github.com/users/justmsl', 
+'https://api.github.com/users/luishrd', 
+'https://api.github.com/users/bigknell'];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -80,8 +83,8 @@ axios.get("https://api.github.com/users/AlixCat13")
 
 
 
-const cardMaker = (Object) => {
-  console.log(Object.data.avatar_url)
+const cardMaker = (data) => {
+  
   const card = document.createElement('div')
   const userImg = document.createElement('img')
   const cardInfo = document.createElement('p')
@@ -101,15 +104,15 @@ const cardMaker = (Object) => {
   userName.classList.add('username')
 
   
-  name.textContent = Object.data.name
-  userName.textContent = Object.data.login
-  location.textContent = 'Location:' + Object.data.location
-  profile.textContent = 'Profile: '
-  address.setAttribute('href', Object.data)
-  address.textContent = Object.data.html_url
-  followers.textContent = 'Followers:' + Object.data.followers
-  following.textContent = 'Following:' + Object.data.following
-  bio.textContent = 'Bio:' + Object.data.bio
+  name.textContent = data.name
+  userName.textContent = data.login
+  location.textContent = ('Location:', data.location)
+  profile.textContent = 'Profile:', address
+  address.setAttribute('href', data)
+  address.textContent = data.html_url
+  followers.textContent = ('Followers:' , data.followers)
+  following.textContent = ('Following:' , data.following)
+  bio.textContent = ('Bio:' , data.bio)
 
 
   profile.appendChild(address)
@@ -127,8 +130,10 @@ const cardMaker = (Object) => {
 
 const cardGroup = document.querySelector('.cards')
 
+// const newCard = friendsArray;
 
 
-followersArray.forEach(Object => {
-  cardGroup.appendChild(cardMaker(Object.data.name, Object.data.userName, Object.data.location, Object.data.profile, Object.data.followers, Object.data.following, Object.data.bio))
-})
+
+// friendsArray.forEach(() => {
+//   newCard.appendChild(cardGroup)
+// })
