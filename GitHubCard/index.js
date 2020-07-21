@@ -4,6 +4,18 @@
     https://api.github.com/users/<your name>
 */
 
+import axios from 'axios'
+
+axios.get("https://api.github.com/users/AlixCat13")
+.then((successResponse) => {
+  console.log(successResponse)
+return successResponse
+})
+
+.catch((errorResponse) => {
+  console.log(errorResponse)
+})
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -28,7 +40,9 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = ['tetondan', 'dustinmyers', 'justmsl', 'luishrd', 'bigknell'];
+const followersArray = [
+'https://api.github.com/users/tetondan', 
+'https://api.github.com/users/dustinmyers', 'https://api.github.com/users/justmsl', 'https://api.github.com/users/luishrd', 'https://api.github.com/users/bigknell'];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -60,15 +74,7 @@ const followersArray = ['tetondan', 'dustinmyers', 'justmsl', 'luishrd', 'bigkne
 */
 
 
-axios.get("https://api.github.com/users/AlixCat13")
-.then((successResponse) => {
-  console.log(successResponse)
-return successResponse
-})
 
-.catch((errorResponse) => {
-  console.log(errorResponse)
-})
 
 const cardMaker = (userProfile) => {
   const card = document.createElement('div')
@@ -85,15 +91,16 @@ const cardMaker = (userProfile) => {
 
   card.classList.add('card')
   cardInfo.classList.add('card-info')
+  userImg.src = Object['avatar_url']
   name.classList.add('name')
   userName.classList.add('username')
 
-  userImg.src = Object.data.avatar_url
+  
   name.textContent = Object.data.name
   userName.textContent = Object.data.login
   location.textContent = `Location: ${Object.data.location}`
   profile.textContent = `Profile: ${link}`
-  link.href = Object.data.avatar_url
+  link.setAttribute('href', Object.data['html_url'])
   followers.textContent = `Followers: ${Object.data.followers}`
   following.textContent = `Following: ${Object.data.following}`
   bio.textContent = `Bio: ${Object.data.bio}`
@@ -111,8 +118,8 @@ const cardMaker = (userProfile) => {
 }
 
 const cardGroup = document.querySelector('.cards')
-cardGroup.appendChild(cardMaker(Object));
+cardGroup.appendChild(cardMaker(card));
 
 followersArray.forEach(data => {
-  cardGroup.appendChild(gitCard(data.name, data.userName, data.location, data.profile, data.followers, data.following, data.bio))
+  cardGroup.appendChild(gitCard(Object.data.name, Object.data.userName, Object.data.location, Object.data.profile, Object.data.followers, Object.data.following, Object.data.bio))
 })
