@@ -31,11 +31,13 @@
 */
 
 const friendsArray = [
+'https://api.github.com/users/AlixCat13',
 'https://api.github.com/users/tetondan', 
 'https://api.github.com/users/dustinmyers', 
 'https://api.github.com/users/justmsl', 
 'https://api.github.com/users/luishrd', 
-'https://api.github.com/users/bigknell'];
+'https://api.github.com/users/bigknell'
+];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -68,62 +70,61 @@ const friendsArray = [
 
 import axios from 'axios'
 
-axios.get("https://api.github.com/users/AlixCat13")
+friendsArray.forEach(friend => {
+axios.get(friend)
 .then((successResponse) => {
   console.log(successResponse)
-  Object.entries(successResponse).forEach( (url) => {
-  const newCard = cardMaker(url)
+  const newCard = cardMaker(successResponse.data)  
   cardGroup.appendChild(newCard)
-  })
 })
 
 .catch((errorResponse) => {
   console.log('Error!', errorResponse)
 })
-
+}
+)
 
 
 const cardMaker = (data) => {
   
+  console.log(data)
+
   const card = document.createElement('div')
   const userImg = document.createElement('img')
-  const cardInfo = document.createElement('p')
+  const cardInfo = document.createElement('div')
   const name = document.createElement('h3')
   const userName = document.createElement('p')
   const location = document.createElement('p')
   const profile = document.createElement('p')
-  const address = document.createElement('a')
   const followers = document.createElement('p')
   const following = document.createElement('p')
   const bio = document.createElement('p')
 
   card.classList.add('card')
-  cardInfo.classList.add('card-info')
-  userImg.src = data.avatar_url
+  cardInfo.classList.add('card-info')  
   name.classList.add('name')
   userName.classList.add('username')
 
-  
+
+  userImg.src = data.avatar_url
   name.textContent = data.name
   userName.textContent = data.login
-  location.textContent = ('Location:', data.location)
-  profile.textContent = 'Profile:', data.html_url
-  address.setAttribute('href', data.html_url)
-  address.textContent = data.html_url
-  followers.textContent = ('Followers:' , data.followers)
-  following.textContent = ('Following:' , data.following)
-  bio.textContent = ('Bio:' , data.bio)
+  location.textContent = `Location: ${data.location}`
+  profile.textContent = `Profile:${data.html_url}`
+  followers.textContent = `Followers:${data.followers}`
+  following.textContent = `Following:${data.following}`
+  bio.textContent = `Bio: ${data.bio}`
 
-
-  profile.appendChild(address)
+  card.appendChild(userImg)
   card.appendChild(cardInfo)
-  card.appendChild(name)
-  card.appendChild(userName)
-  card.appendChild(location)
-  card.appendChild(profile)
-  card.appendChild(followers)
-  card.appendChild(following)
-  card.appendChild(bio)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(userName)
+   cardInfo.appendChild(location)
+   cardInfo.appendChild(profile)
+   cardInfo.appendChild(followers)
+   cardInfo.appendChild(following)
+   cardInfo.appendChild(bio)
 
   return card  
 }
