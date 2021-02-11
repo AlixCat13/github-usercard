@@ -4,6 +4,8 @@
     https://api.github.com/users/<your name>
 */
 
+
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -28,7 +30,14 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const friendsArray = [
+'https://api.github.com/users/AlixCat13',
+'https://api.github.com/users/tetondan', 
+'https://api.github.com/users/dustinmyers', 
+'https://api.github.com/users/justmsl', 
+'https://api.github.com/users/luishrd', 
+'https://api.github.com/users/bigknell'
+];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,3 +67,72 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+import axios from 'axios'
+
+friendsArray.forEach(friend => {
+axios.get(friend)
+.then((successResponse) => {
+  console.log(successResponse)
+  const newCard = cardMaker(successResponse.data)  
+  cardGroup.appendChild(newCard)
+})
+
+.catch((errorResponse) => {
+  console.log('Error!', errorResponse)
+})
+}
+)
+
+
+const cardMaker = (data) => {
+  
+  console.log(data)
+
+  const card = document.createElement('div')
+  const userImg = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const name = document.createElement('h3')
+  const userName = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')  
+  name.classList.add('name')
+  userName.classList.add('username')
+
+
+  userImg.src = data.avatar_url
+  name.textContent = data.name
+  userName.textContent = data.login
+  location.textContent = `Location: ${data.location}`
+  profile.textContent = `Profile:${data.html_url}`
+  followers.textContent = `Followers:${data.followers}`
+  following.textContent = `Following:${data.following}`
+  bio.textContent = `Bio: ${data.bio}`
+
+  card.appendChild(userImg)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(userName)
+   cardInfo.appendChild(location)
+   cardInfo.appendChild(profile)
+   cardInfo.appendChild(followers)
+   cardInfo.appendChild(following)
+   cardInfo.appendChild(bio)
+
+  return card  
+}
+
+const cardGroup = document.querySelector('.cards')
+
+const newCard = friendsArray;
+
+friendsArray.forEach(() => {
+  newCard.appendChild(cardGroup)
+})
